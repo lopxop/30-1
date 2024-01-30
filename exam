@@ -1,0 +1,79 @@
+using System;
+
+abstract class Product
+{
+    protected string productId;
+    protected string name;
+    protected double price;
+    protected string producer;
+
+    public Product(string productId, string name, double price, string producer)
+    {
+        this.productId = productId;
+        this.name = name;
+        this.price = price;
+        this.producer = producer;
+    }
+
+    public abstract double ComputeTax();
+}
+
+class Book : Product
+{
+    public Book(string productId, string name, double price, string producer)
+        : base(productId, name, price, producer)
+    {
+    }
+
+    public override double ComputeTax()
+    {
+        return price * 0.08;
+    }
+}
+
+class MobilePhone : Product
+{
+    public MobilePhone(string productId, string name, double price, string producer)
+        : base(productId, name, price, producer)
+    {
+    }
+
+    public override double ComputeTax()
+    {
+        return price * 0.10;
+    }
+}
+
+class Program
+{
+    static void Main(string[] args)
+    {
+        Product[] products = new Product[6];
+
+        products[0] = new Book("B1", "Book 1", 20.0, "Nha Xuat Ban A");
+        products[1] = new Book("B2", "Book 2", 30.0, "Nha Xuat Ban B");
+        products[2] = new Book("B3", "Book 3", 40.0, "Nha Xuat Ban C");
+
+        products[3] = new MobilePhone("M1", "Phone 1", 200.0, "Iphone");
+        products[4] = new MobilePhone("M2", "Phone 2", 300.0, "SamSung");
+        products[5] = new MobilePhone("M3", "Phone 3", 400.0, "Sony");
+
+        double totalBookTax = 0;
+        double totalMobileTax = 0;
+
+        foreach (Product product in products)
+        {
+            if (product is Book)
+            {
+                totalBookTax += product.ComputeTax();
+            }
+            else if (product is MobilePhone)
+            {
+                totalMobileTax += product.ComputeTax();
+            }
+        }
+
+        Console.WriteLine("Total tax for books: $" + totalBookTax);
+        Console.WriteLine("Total tax for mobile phones: $" + totalMobileTax);
+    }
+}
